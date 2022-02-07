@@ -1,55 +1,54 @@
 import json
 import os.path
 
-path: str  # JSON file path
 
+class Serializer:
+    path: str  # JSON file path
 
-def add(header: str, content: str):
-    """Adds a new element to the end of the dict."""
-    note = {'header': header, 'content': content}
-    notes = load_dict()
-    notes[len(notes)] = note
-    dump_dict(notes)
+    def __init__(self, path):
+        self.path = path
 
+    def add(self, header: str, content: str):
+        """Adds a new element to the end of the dict."""
+        note = {'header': header, 'content': content}
+        notes = self.load_dict()
+        notes[len(notes)] = note
+        self.dump_dict(notes)
 
-def delete(element_id: str):
-    """Removes an element from a dict by its ID."""
-    notes = load_dict()
-    try:
-        notes.pop(element_id)
-    except KeyError:
-        return -1
-    dump_dict(notes)
-    index_id()
-    return 0
+    def delete(self, element_id: str):
+        """Removes an element from a dict by its ID."""
+        notes = self.load_dict()
+        try:
+            notes.pop(element_id)
+        except KeyError:
+            return -1
+        self.dump_dict(notes)
+        self.index_id()
+        return 0
 
+    def index_id(self):
+        """Shifts dict element IDs."""
+        notes = self.load_dict()
+        output = {}
+        i = 1
+        for note in notes:
+            output[i] = notes[note]
+            i += 1
+        self.dump_dict(output)
 
-def index_id():
-    """Shifts dict element IDs."""
-    notes = load_dict()
-    output = {}
-    i = 1
-    for el in notes:
-        output[i] = notes[el]
-        i += 1
-    dump_dict(output)
+    def load_dict(self):
+        """Dict serialization."""
+        with open(self.path) as f:
+            notes = json.load(f)
+        return notes
 
+    def dump_dict(self, notes: dict):
+        """Dict deserialization."""
+        with open(self.path, "w") as f:
+            json.dump(notes, f)
 
-def load_dict():
-    """Dict serialization."""
-    with open(path) as f:
-        notes = json.load(f)
-    return notes
-
-
-def dump_dict(notes: dict):
-    """Dict deserialization."""
-    with open(path, "w") as f:
-        json.dump(notes, f)
-
-
-def configure_json(structure: dict):
-    """Creates a JSON file and a structure in it if it doesn't exist."""
-    if not os.path.exists(path):
-        with open(path, "w") as f:
-            json.dump({}, f)
+    def configure_json(self, structure: dict):
+        """Creates a JSON file and a structure in it if it doesn't exist."""
+        if not os.path.exists(self.path):
+            with open(self.path, "w") as f:
+                json.dump(structure, f)

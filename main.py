@@ -1,7 +1,7 @@
-import serializer as db
+from serializer import Serializer
 import colorama as c
 
-db.path = 'notes.json'
+db = Serializer('notes.json')  # New serializer instance
 
 
 def select_action():
