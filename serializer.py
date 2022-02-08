@@ -11,38 +11,38 @@ class Serializer:
     def add(self, header: str, content: str):
         """Adds a new element to the end of the dict."""
         note = {'header': header, 'content': content}
-        notes = self.load_dict()
+        notes = self.load()
         notes[len(notes)] = note
-        self.dump_dict(notes)
+        self.dump(notes)
 
     def delete(self, element_id: str):
         """Removes an element from a dict by its ID."""
-        notes = self.load_dict()
+        notes = self.load()
         try:
             notes.pop(element_id)
         except KeyError:
             return -1
-        self.dump_dict(notes)
+        self.dump(notes)
         self.index_id()
         return 0
 
     def index_id(self):
         """Shifts dict element IDs."""
-        notes = self.load_dict()
+        notes = self.load()
         output = {}
         i = 1
         for note in notes:
             output[i] = notes[note]
             i += 1
-        self.dump_dict(output)
+        self.dump(output)
 
-    def load_dict(self):
+    def load(self):
         """Dict serialization."""
         with open(self.path) as f:
             notes = json.load(f)
         return notes
 
-    def dump_dict(self, notes: dict):
+    def dump(self, notes: dict):
         """Dict deserialization."""
         with open(self.path, "w") as f:
             json.dump(notes, f)

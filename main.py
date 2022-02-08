@@ -15,7 +15,7 @@ def select_action():
 
 def print_notes_list():
     """Prints the ID and title of all notes."""
-    notes = db.load_dict()
+    notes = db.load()
     if len(notes) == 0:
         print(c.Fore.LIGHTGREEN_EX + 'You don\'t have any notes right now.' + c.Fore.RESET)
     for el in notes:
@@ -25,7 +25,7 @@ def print_notes_list():
 
 def view_note(note_id: str):
     """Prints note content by ID."""
-    notes = db.load_dict()
+    notes = db.load()
     print(c.Fore.GREEN + 'ID: ' + note_id)
     print(c.Fore.YELLOW + 'Name: ' + notes[note_id]['header'])
     print(c.Fore.CYAN + notes[note_id]['content'] + c.Fore.RESET)
