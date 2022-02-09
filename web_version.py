@@ -8,7 +8,7 @@ db = Serializer('notes.json')  # New serializer instance
 
 
 def get_notes_list():
-    """Prints the ID and title of all notes."""
+    """Returns the ID and title of all notes."""
     notes = db.load()
     notes_str = ''
     if len(notes) == 0:
@@ -20,7 +20,7 @@ def get_notes_list():
 
 
 def view_note(note_id: str):
-    """Prints note content by ID."""
+    """Returns note content by ID."""
     notes = db.load()
     notes_str = 'ID: ' + note_id + '\n'
     notes_str += 'Name: ' + notes[note_id]['header'] + '\n'
@@ -40,22 +40,26 @@ remove - delete note.
 
 @app.get('/add')
 def _1(name: str, text: str):
+    """Adds new note."""
     note_id = db.add(name, text)
     return PlainTextResponse(f'Note with id {note_id} successfully added.')
 
 
 @app.get('/list')
 def _2():
+    """Gets notes list."""
     return PlainTextResponse(get_notes_list())
 
 
 @app.get('/get')
 def _3(id: str):
+    """Gets note by ID."""
     return PlainTextResponse(view_note(id))
 
 
 @app.get('/remove')
 def _4(id: str):
+    """Removes note by ID."""
     if db.delete(id) != 0:
         return 'Note with this ID not found. Try again.'
     else:
