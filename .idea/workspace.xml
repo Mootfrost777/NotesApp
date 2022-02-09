@@ -78,7 +78,8 @@
       <workItem from="1644255292077" duration="145000" />
       <workItem from="1644255451960" duration="13000" />
       <workItem from="1644255478968" duration="1418000" />
-      <workItem from="1644344301681" duration="1493000" />
+      <workItem from="1644344301681" duration="2545000" />
+      <workItem from="1644430696248" duration="407000" />
     </task>
     <servers />
   </component>
@@ -86,7 +87,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/main_py$web_version.coverage" NAME="web_version Coverage Results" MODIFIED="1644345751912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/main_py$web_version.coverage" NAME="web_version Coverage Results" MODIFIED="1644346013932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NotesApp$main.coverage" NAME="main Coverage Results" MODIFIED="1644254891182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

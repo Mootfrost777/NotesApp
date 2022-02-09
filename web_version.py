@@ -22,8 +22,7 @@ def get_notes_list():
 def view_note(note_id: str):
     """Prints note content by ID."""
     notes = db.load()
-    notes_str = ''
-    notes_str += 'ID: ' + note_id + '\n'
+    notes_str = 'ID: ' + note_id + '\n'
     notes_str += 'Name: ' + notes[note_id]['header'] + '\n'
     notes_str += notes[note_id]['content']
     return notes_str
@@ -32,36 +31,35 @@ def view_note(note_id: str):
 @app.get('/')
 def index():
     return PlainTextResponse('''Notes app:
-1.Create note.
-2.Notes list.
-3.Read note.
-4.Delete note.
-5.Exit.
+add - create note.
+list - Notes list.
+get - read note.
+remove - delete note.
 ''')
 
 
-@app.get('/1')
-def _1(header: str, content: str):
-    db.add(header, content)
-    return PlainTextResponse('OK')
+@app.get('/add')
+def _1(name: str, text: str):
+    note_id = db.add(name, text)
+    return PlainTextResponse(f'Note with id {note_id} successfully added.')
 
 
-@app.get('/2')
+@app.get('/list')
 def _2():
     return PlainTextResponse(get_notes_list())
 
 
-@app.get('/3')
+@app.get('/get')
 def _3(id: str):
     return PlainTextResponse(view_note(id))
 
 
-@app.get('/4')
+@app.get('/remove')
 def _4(id: str):
     if db.delete(id) != 0:
         return 'Note with this ID not found. Try again.'
     else:
-        return PlainTextResponse('OK')
+        return PlainTextResponse(f'Note with id {id} removed.')
 
 
 db.configure_json({})  # Create new file and structure if not exists

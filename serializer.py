@@ -8,12 +8,14 @@ class Serializer:
     def __init__(self, path):
         self.path = path
 
-    def add(self, header: str, content: str):
+    def add(self, name: str, text: str):
         """Adds a new element to the end of the dict."""
-        note = {'header': header, 'content': content}
+        note = {'header': name, 'content': text}
         notes = self.load()
-        notes[len(notes)] = note
+        note_id = len(notes)
+        notes[id] = note
         self.dump(notes)
+        return note_id
 
     def delete(self, element_id: str):
         """Removes an element from a dict by its ID."""

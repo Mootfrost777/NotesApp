@@ -45,15 +45,19 @@ while True:
     choose = select_action()
     match choose:
         case 1:  # Create new note
-            header = input('Enter note name: ')
-            content = input('Enter note: ')
-            db.add(header, content)
+            name = input('Enter note name: ')
+            text = input('Enter note text: ')
+            note_id = db.add(name, text)
+            print(c.Fore.LIGHTGREEN_EX + 'Note with id {note_id} successfully added.' + c.Fore.RESET)
         case 2:  # Show notes list
             print_notes_list()
         case 3:  # Show note content by ID
             view_note(input('Enter note ID: '))
         case 4:  # Delete note by ID
-            if db.delete(input('Enter note ID: ')) != 0:
-                print(c.Fore.RED + 'Note with this ID not found. Try again.' + c.Fore.RESET)
+            note_id = input('Enter note ID: ')
+            if db.delete(note_id) != 0:
+                print(c.Fore.RED + f'Note with id {note_id} not found. Try again.' + c.Fore.RESET)
+            else:
+                print(c.Fore.LIGHTGREEN_EX + 'Note with id {note_id} removed.' + c.Fore.RESET)
         case 5:
             exit(0)
