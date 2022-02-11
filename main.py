@@ -48,7 +48,7 @@ while True:
             name = input('Enter note name: ')
             text = input('Enter note text: ')
             note_id = db.add(name, text)
-            print(c.Fore.LIGHTGREEN_EX + 'Note with id {note_id} successfully added.' + c.Fore.RESET)
+            print(c.Fore.LIGHTGREEN_EX + f'Note with id {note_id} successfully added.' + c.Fore.RESET)
         case 2:  # Show notes list
             print_notes_list()
         case 3:  # Show note content by ID
@@ -58,6 +58,6 @@ while True:
             if db.delete(note_id) != 0:
                 print(c.Fore.RED + f'Note with id {note_id} not found. Try again.' + c.Fore.RESET)
             else:
-                print(c.Fore.LIGHTGREEN_EX + 'Note with id {note_id} removed.' + c.Fore.RESET)
+                print(c.Fore.LIGHTGREEN_EX + f'Note with id {note_id} removed.' + c.Fore.RESET)
         case 5:
             exit(0)
