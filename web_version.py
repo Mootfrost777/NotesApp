@@ -1,5 +1,5 @@
 from serializer import Serializer
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from fastapi.responses import PlainTextResponse
 import uvicorn
 
@@ -15,7 +15,7 @@ def get_notes_list():
         return 'You don\'t have any notes right now.'
     notes_str += 'Notes list:'
     for el in notes:
-        notes_str += '\nID: ' + el + '. Name: ' + notes[el]['header']
+        notes_str += '\nID: ' + el + '. Name: ' + notes[el]['name']
     return notes_str
 
 
@@ -23,8 +23,8 @@ def view_note(note_id: str):
     """Returns note content by ID."""
     notes = db.load()
     notes_str = 'ID: ' + note_id + '\n'
-    notes_str += 'Name: ' + notes[note_id]['header'] + '\n'
-    notes_str += notes[note_id]['content']
+    notes_str += 'Name: ' + notes[note_id]['name'] + '\n'
+    notes_str += notes[note_id]['text']
     return notes_str
 
 
@@ -38,27 +38,32 @@ remove - delete note.
 ''')
 
 
-@app.get('/add')
-def _1(name: str, text: str):
+@app.post('/add')
+def _add(name: str = Body(..., embed=True), text: str = Body(..., embed=True)):
     """Adds new note."""
     note_id = db.add(name, text)
     return PlainTextResponse(f'Note with id {note_id} successfully added.')
 
 
 @app.get('/list')
-def _2():
+def _list():
     """Gets notes list."""
     return PlainTextResponse(get_notes_list())
 
 
 @app.get('/get')
-def _3(id: str):
+def _get(id: str):
     """Gets note by ID."""
     return PlainTextResponse(view_note(id))
 
 
-@app.get('/remove')
-def _4(id: str):
+@app.post('/append')
+def _append(id: str = Body(..., embed=True), text: str = Body(..., embed=True),):
+    return PlainTextResponse(f'The text was successfully added to the note with id {db.append(id, text)}.')
+
+
+@app.post('/remove')
+def _remove(id: str = Body(..., embed=True)):
     """Removes note by ID."""
     if db.delete(id) != 0:
         return 'Note with this ID not found. Try again.'

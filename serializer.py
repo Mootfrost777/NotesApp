@@ -5,15 +5,15 @@ import os.path
 class Serializer:
     path: str  # JSON file path
 
-    def __init__(self, path):
+    def __init__(self, path: str):
         self.path = path
 
     def add(self, name: str, text: str):
         """Adds a new element to the end of the dict."""
-        note = {'header': name, 'content': text}
+        note = {'name': name, 'text': text}
         notes = self.load()
-        note_id = len(notes)
-        notes[id] = note
+        note_id = len(notes) + 1
+        notes[note_id] = note
         self.dump(notes)
         return note_id
 
@@ -27,6 +27,19 @@ class Serializer:
         self.dump(notes)
         self.index_id()
         return 0
+
+    def append(self, element_id: str, text: str):
+        """Appends text to an existing element by id"""
+        notes = self.load()
+        output = {}
+        output_id = ''
+        for note in notes:
+            output[note] = notes[note]
+            if note == element_id:
+                output[note]['text'] += text
+                output_id = note
+        self.dump(output)
+        return output_id
 
     def index_id(self):
         """Shifts dict element IDs."""
