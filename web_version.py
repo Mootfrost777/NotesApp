@@ -30,7 +30,7 @@ def view_note(note_id: str):
 
 @app.get('/')
 def index():
-    """"""
+    """Shows a list of commands."""
     return PlainTextResponse('''Notes app:
 add - create note.
 list - Notes list.
@@ -61,6 +61,7 @@ def _get(id: str):
 
 @app.post('/append')
 def _append(id: str = Body(..., embed=True), text: str = Body(..., embed=True)):
+    """Adds text to the note by ID."""
     if db.append(id, text) != 0:
         return 'Note with this ID not found. Try again.'
     else:
@@ -69,6 +70,7 @@ def _append(id: str = Body(..., embed=True), text: str = Body(..., embed=True)):
 
 @app.post('/chname')
 def _chname(id: str = Body(..., embed=True), name: str = Body(..., embed=True)):
+    """Changes the name of the note by ID."""
     if db.change_name(id, name) != 0:
         return 'Note with this ID not found. Try again.'
     else:
