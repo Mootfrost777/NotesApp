@@ -20,7 +20,7 @@ def get_notes_list():
 
 
 def view_note(note_id: str):
-    """Returns note content by ID."""
+    """Returns note text by ID."""
     notes = db.load()
     notes_str = 'ID: ' + note_id + '\n'
     notes_str += 'Name: ' + notes[note_id]['name'] + '\n'
