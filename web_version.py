@@ -30,19 +30,21 @@ def view_note(note_id: str):
 
 @app.get('/')
 def index():
+    """"""
     return PlainTextResponse('''Notes app:
 add - create note.
 list - Notes list.
 get - read note.
 remove - delete note.
+append - add text to note.
+chname - change note name.
 ''')
 
 
 @app.post('/add')
 def _add(name: str = Body(..., embed=True), text: str = Body(..., embed=True)):
     """Adds new note."""
-    note_id = db.add(name, text)
-    return PlainTextResponse(f'Note with id {note_id} successfully added.')
+    return PlainTextResponse(f'Note with id {db.add(name, text)} successfully added.')
 
 
 @app.get('/list')
@@ -58,8 +60,19 @@ def _get(id: str):
 
 
 @app.post('/append')
-def _append(id: str = Body(..., embed=True), text: str = Body(..., embed=True),):
-    return PlainTextResponse(f'The text was successfully added to the note with id {db.append(id, text)}.')
+def _append(id: str = Body(..., embed=True), text: str = Body(..., embed=True)):
+    if db.append(id, text) != 0:
+        return 'Note with this ID not found. Try again.'
+    else:
+        return PlainTextResponse(f'The text was successfully added to the note with id {id}.')
+
+
+@app.post('/chname')
+def _chname(id: str = Body(..., embed=True), name: str = Body(..., embed=True)):
+    if db.change_name(id, name) != 0:
+        return 'Note with this ID not found. Try again.'
+    else:
+        return PlainTextResponse(f'Note name with id {id} has been changed to: {name}.')
 
 
 @app.post('/remove')

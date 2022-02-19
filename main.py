@@ -38,8 +38,9 @@ print('''Notes app:
 2.Notes list.
 3.Read note.
 4.Append text.
-5.Delete note.
-6.Exit.
+5.Change note name.
+6.Delete note.
+7.Exit.
 ''')
 
 while True:
@@ -56,9 +57,22 @@ while True:
         case 4:
             note_id = input('Enter note id: ')
             text = input('Enter text: ')
-            print(f'The text was successfully added to the note with id {db.append(note_id, text)}.')
-        case 5:  # Delete note by ID
+            if db.append(note_id, text) != 0:
+                print('Note with this ID not found. Try again.')
+            else:
+                print(f'The text was successfully added to the note with id {note_id}.')
+        case 5:
+            note_id = input('Enter note id: ')
+            name = input('Enter new name: ')
+            if db.change_name(note_id, name) != 0:
+                print('Note with this ID not found. Try again.')
+            else:
+                print(f'Note name with id {note_id} has been changed to: {name}.')
+            db.change_name(note_id, name)
+        case 6:  # Delete note by ID
             if db.delete(input('Enter note ID: ')) != 0:
                 print(c.Fore.RED + 'Note with this ID not found. Try again.' + c.Fore.RESET)
-        case 6:
+            else:
+                print(f'Note with id {note_id} removed.')
+        case 7:
             exit(0)
